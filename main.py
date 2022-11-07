@@ -1,5 +1,4 @@
-from unicodedata import name
-from Fahrzeugmanager import Fahrzeugmanager
+from fahrzeugmanager import Fahrzeugmanager
 
 
 def main() -> None:

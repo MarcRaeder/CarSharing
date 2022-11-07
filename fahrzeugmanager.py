@@ -1,5 +1,3 @@
-from ctypes import Array
-from unicodedata import name
 from datetime import datetime
 
 
@@ -28,7 +26,7 @@ class Fahrzeugmanager:
 
         return fahrzeugliste
 
-    def bucheFahrzeug(self, name, start, ende) -> bool:
+    def bucheFahrzeug(self, name: str, start: str, ende: str) -> bool:
         fahrzeugWurdeNochNieGebucht = len(self.collection[name]) != 3
 
         if fahrzeugWurdeNochNieGebucht:
@@ -45,8 +43,9 @@ class Fahrzeugmanager:
 
         return True
 
-    def gibVerfuegbareFahrzeuge(self, standort, start, ende) -> Array:
+    def gibVerfuegbareFahrzeuge(self, standort: str, start: str, ende: str) -> list:
         self.verfuegbareFahrzeuge = {}
+        verfuegbareFahrzeugeListe = []
 
         for collection in self.collection.items():
             if standort in collection[1]:
@@ -55,13 +54,15 @@ class Fahrzeugmanager:
         for car in self.verfuegbareFahrzeuge:
             fahrzeugWurdeNochNieGebucht = len(self.verfuegbareFahrzeuge[car]) != 3
             if fahrzeugWurdeNochNieGebucht:
-                print(car)
+                verfuegbareFahrzeugeListe.append(car)
 
             else:
                 if self.istFahrzeugVerfügbar(start, ende, car):
-                    print(car)
+                    verfuegbareFahrzeugeListe.append(car)
 
-    def istFahrzeugVerfügbar(self, start, ende, name) -> bool:
+        return verfuegbareFahrzeugeListe
+
+    def istFahrzeugVerfügbar(self, start: str, ende: str, name: str) -> bool:
         currentStart = self.collection[name][1]
         currentEnd = self.collection[name][2]
         currentStartDate = datetime.strptime(currentStart, "%Y/%m/%d %H:%M")
