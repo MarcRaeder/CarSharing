@@ -13,19 +13,19 @@ def main() -> None:
     manager.bucheFahrzeug("Bahnhof 2", "2005/04/14 11:00", "2005/04/15 12:00")
     manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 10:00", "2005/04/15 19:00")
 
-    # manager.gibFahrzeugnamen("Bahnhof")
-    # manager.gibFahrzeugnamen("Rathaus")
+    # print(manager.gibFahrzeugnamen("Bahnhof"))
+    # print(manager.gibFahrzeugnamen("Rathaus"))
 
     # manager.gibVerfuegbareFahrzeuge("Bahnhof", "2005/04/15 11:30", "2005/04/15 19:00")
     # manager.gibVerfuegbareFahrzeuge("Bahnhof", "2005/04/15 12:00", "2005/04/15 18:00")
     # manager.gibVerfuegbareFahrzeuge("Bahnhof", "2005/04/15 19:15", "2005/04/15 23:00")
 
-    # manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 09:00", "2005/04/15 10:00")
-    # manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 09:00", "2005/04/15 11:00")
-    # manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 11:00", "2005/04/15 18:00")
-    # manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 18:00", "2005/04/15 20:00")
-    # manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 19:00", "2005/04/15 20:00")
-    # manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 09:00", "2005/04/15 20:00")
+    # print(manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 09:00", "2005/04/15 10:00"))
+    # print(manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 09:00", "2005/04/15 11:00"))
+    # print(manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 11:00", "2005/04/15 18:00"))
+    # print(manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 18:00", "2005/04/15 20:00"))
+    # print(manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 19:00", "2005/04/15 20:00"))
+    # print(manager.bucheFahrzeug("Bahnhof 3", "2005/04/15 09:00", "2005/04/15 20:00"))
 
 
 if __name__ == "__main__":

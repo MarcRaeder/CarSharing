@@ -13,15 +13,20 @@ class Fahrzeugmanager:
         else:
             print("Dieses Fahrzeug existiert bereits")
 
-    def gibFahrzeugnamen(self) -> Array:
+    def gibFahrzeugnamen(self) -> list:
+        fahrzeugliste: list = []
         for fahrzeug in sorted(self.collection.keys()):
+            fahrzeugliste.append(fahrzeug)
 
-            print(fahrzeug)
+        return fahrzeugliste
 
-    def gibFahrzeugnamen(self, ausgewählterStandort: str) -> Array:
+    def gibFahrzeugnamen(self, ausgewählterStandort: str) -> list:
+        fahrzeugliste: list = []
         for fahrzeug, standort in self.collection.items():
             if ausgewählterStandort in standort:
-                print(fahrzeug)
+                fahrzeugliste.append(fahrzeug)
+
+        return fahrzeugliste
 
     def bucheFahrzeug(self, name, start, ende) -> bool:
         fahrzeugWurdeNochNieGebucht = len(self.collection[name]) != 3
@@ -29,40 +34,16 @@ class Fahrzeugmanager:
         if fahrzeugWurdeNochNieGebucht:
             standort = self.collection[name][0]
             self.collection[name] = [standort, start, ende]
-            print(f"Ihr Fahrzeug wurde von {start} bis {ende} gebucht ")
 
             return True
 
-        currentStart = self.collection[name][1]
-        currentEnde = self.collection[name][2]
-        currentStartDate = datetime.strptime(currentStart, "%Y/%m/%d %H:%M")
-        currentEndeDate = datetime.strptime(currentEnde, "%Y/%m/%d %H:%M")
-        newStartDate = datetime.strptime(start, "%Y/%m/%d %H:%M")
-        newEndeDate = datetime.strptime(ende, "%Y/%m/%d %H:%M")
-        buchungKreuztAndereBuchungFall1 = (
-            currentStartDate <= newStartDate < currentEndeDate
-        )
-        buchungKreuztAndereBuchungFall2 = (
-            currentStartDate < newEndeDate <= currentEndeDate
-        )
-
-        if buchungKreuztAndereBuchungFall1:
-            print(
-                f"Das Fahrzeug ist von {currentStart} bis {currentEnde} nicht verfügbar!"
-            )
-
-            return False
-
-        if buchungKreuztAndereBuchungFall2:
-            print(
-                f"Das Fahrzeug ist von {currentStart} bis {currentEnde} nicht verfügbar!"
-            )
-
+        if not self.istFahrzeugVerfügbar(start, ende, name):
             return False
 
         standort = self.collection[name][0]
         self.collection[name] = [standort, start, ende]
-        print(f"Ihr Fahrzeug wurde von {start} bis {ende} gebucht ")
+
+        return True
 
     def gibVerfuegbareFahrzeuge(self, standort, start, ende) -> Array:
         self.verfuegbareFahrzeuge = {}
@@ -77,16 +58,24 @@ class Fahrzeugmanager:
                 print(car)
 
             else:
-                newStartDate = datetime.strptime(start, "%Y/%m/%d %H:%M")
-                newEndeDate = datetime.strptime(ende, "%Y/%m/%d %H:%M")
-                currentStart = self.verfuegbareFahrzeuge[car][1]
-                currentEnde = self.verfuegbareFahrzeuge[car][2]
-                currentStartDate = datetime.strptime(currentStart, "%Y/%m/%d %H:%M")
-                currentEndeDate = datetime.strptime(currentEnde, "%Y/%m/%d %H:%M")
-                buchungKreuztAndereBuchungFall1 = (
-                    currentStartDate <= newStartDate < currentEndeDate
-                    or currentStartDate < newEndeDate < currentEndeDate
-                )
-
-                if not buchungKreuztAndereBuchungFall1:
+                if self.istFahrzeugVerfügbar(start, ende, car):
                     print(car)
+
+    def istFahrzeugVerfügbar(self, start, ende, name) -> bool:
+        currentStart = self.collection[name][1]
+        currentEnd = self.collection[name][2]
+        currentStartDate = datetime.strptime(currentStart, "%Y/%m/%d %H:%M")
+        currentEndDate = datetime.strptime(currentEnd, "%Y/%m/%d %H:%M")
+        newStartDate = datetime.strptime(start, "%Y/%m/%d %H:%M")
+        newEndDate = datetime.strptime(ende, "%Y/%m/%d %H:%M")
+        buchungKreuztAndereBuchungFall1 = (
+            currentStartDate <= newStartDate < currentEndDate
+        )
+        buchungKreuztAndereBuchungFall2 = (
+            currentStartDate < newEndDate <= currentEndDate
+        )
+
+        if not buchungKreuztAndereBuchungFall1 and not buchungKreuztAndereBuchungFall2:
+            return True
+
+        return False
